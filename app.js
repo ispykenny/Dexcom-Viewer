@@ -7,30 +7,27 @@ const dexcom = require('dexcom-share');
 const chalk = require('chalk');
 let allReadings = [];
 
-app.use('/' , (req, res, err) => {
+app.use('/', (req, res, err) => {
   res.send(allReadings)
 })
 
-
-
-
 const changedNumber = allReadings => {
-	if(allReadings.length >= 2) {
+  if (allReadings.length >= 2) {
     let previousItem = allReadings[allReadings.length - 1].reading;
     let lastNumber = allReadings[allReadings.length - 2].reading;
-    
-    if(previousItem < lastNumber) {
+
+    if (previousItem < lastNumber) {
       difference = `-${lastNumber - previousItem} ↘`;
-    } else if(previousItem === lastNumber ) {
+    } else if (previousItem === lastNumber) {
       difference = `No change 🤙`;
     } else {
       difference = `+${previousItem - lastNumber} ↗`;
-    } 
-    return difference;
+    }
   } else {
     difference = 0;
-    return difference;
   }
+
+  return difference;
 }
 
 
@@ -39,17 +36,17 @@ const fetchReadings = async () => {
     username: process.env.USER_NAME,
     password: process.env.USER_PASSWORD
   })
-  
+
   for await (const reading of dexcomUser) {
     allReadings.push({
       'reading': reading.Value,
       'time': moment(reading.Date).format('MMMM Do YYYY, h:mm:ss a')
     });
     showResults(allReadings);
-    
+
   }
 }
-  
+
 fetchReadings().catch(err => {
   console.error(err)
   process.exit(1)
@@ -64,11 +61,6 @@ const showResults = allReadings => {
   console.log(chalk.cyanBright('Last Change: ', changedNumber(allReadings)))
 }
 
-
-
-
-
-
-app.listen(PORT,  () => {
+app.listen(PORT, () => {
   console.log(`listening on port: ${PORT}`)
 })
