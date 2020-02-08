@@ -24,12 +24,11 @@ const changedNumber = allReadings => {
       difference = `+${previousItem - lastNumber} ↗`;
     }
   } else {
-    difference = 0;
+    difference = "Not Available";
   }
 
   return difference;
 }
-
 
 const fetchReadings = async () => {
   const dexcomUser = dexcom({
@@ -43,15 +42,14 @@ const fetchReadings = async () => {
       'time': moment(reading.Date).format('MMMM Do YYYY, h:mm:ss a')
     });
     showResults(allReadings);
-
   }
+  
 }
 
 fetchReadings().catch(err => {
   console.error(err)
   process.exit(1)
 })
-
 
 const showResults = allReadings => {
   const lineBreak = '-----------------------------------'
