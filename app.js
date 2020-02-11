@@ -32,8 +32,8 @@ const changedNumber = allReadings => {
 
 const fetchReadings = async () => {
   const dexcomUser = dexcom({
-    username: process.env.USER_NAME,
-    password: process.env.USER_PASSWORD
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD
   })
 
   for await (const reading of dexcomUser) {
