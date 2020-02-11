@@ -7,6 +7,13 @@ const dexcom = require('dexcom-share');
 const chalk = require('chalk');
 let allReadings = [];
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 app.use('/', (req, res, err) => {
   res.send(allReadings)
 })
@@ -33,10 +40,11 @@ const changedNumber = allReadings => {
 const fetchReadings = async () => {
   const dexcomUser = dexcom({
     username: process.env.USERNAME,
-    password: process.env.PASSWORD
+    password: process.env.USERPASSWORD
   })
 
   for await (const reading of dexcomUser) {
+    console.log('hi')
     allReadings.push({
       'reading': reading.Value,
       'time': moment(reading.Date).format('MMMM Do YYYY, h:mm:ss a')
