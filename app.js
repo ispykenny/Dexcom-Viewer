@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const moment = require('moment');
-const PORT = 5000 || PORT;
+const PORT = process.env.PORT || 5000;
 const dexcom = require('dexcom-share');
 const chalk = require('chalk');
 let allReadings = [];
