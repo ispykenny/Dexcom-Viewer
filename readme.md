@@ -3,8 +3,8 @@
 1) Create a .env file
 
 2) Enter your Dexcom Shared Login info with the following variable names
-   - USER_NAME=username
-   - USER_PASSWORD=password
+   - USERNAME=username
+   - PASSWORD=password
 
 3) Run the app.js file
 
