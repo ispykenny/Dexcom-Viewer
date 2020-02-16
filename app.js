@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
 
 app.use('/', (req, res, err) => {
-  res.send(allReadings)
+  res.json(allReadings)
 })
 
 const changedNumber = allReadings => {
@@ -44,10 +44,9 @@ const fetchReadings = async () => {
   })
 
   for await (const reading of dexcomUser) {
-    console.log('hi')
     allReadings.push({
       'reading': reading.Value,
-      'time': moment(reading.Date).format('MMMM Do YYYY, h:mm:ss a')
+      'time': moment(reading.Date).subtract(8 , 'hour').format('MMMM Do YYYY, h:mm:ss a')
     });
     showResults(allReadings);
     if(allReadings.length >= 20 ) {
