@@ -50,7 +50,12 @@ const fetchReadings = async () => {
       'time': moment(reading.Date).format('MMMM Do YYYY, h:mm:ss a')
     });
     showResults(allReadings);
+    if(allReadings.length >= 20 ) {
+      allReadings = [];
+    }
+    console.log(allReadings.length)
   }
+
   
 }
 
